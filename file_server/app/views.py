@@ -16,11 +16,12 @@ def file_list(request, date=None):
             'ctime': datetime.datetime.fromtimestamp(stat.st_ctime),
             'mtime': datetime.datetime.fromtimestamp(stat.st_mtime)
         }
+    
 
     template_name = 'index.html'
     files = [parse_stat(file) for file in os.listdir(settings.FILES_PATH)]
     if date:
-        files = [file for file in files if file['ctime'] == date]
+        files = [file for file in files if file['ctime'].date() == date.date()]
     # Реализуйте алгоритм подготавливающий контекстные данные для шаблона по примеру:
     context = {
         'files': files,
